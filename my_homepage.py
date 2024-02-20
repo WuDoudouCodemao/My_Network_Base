@@ -213,4 +213,4 @@ elif(page=="智慧词典"):
 elif(page=="留言板"):
     home_liuyan()
 elif(page=="退出网页"):
-    pass()
+    pass
