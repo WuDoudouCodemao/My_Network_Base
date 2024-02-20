@@ -6,9 +6,6 @@ import getpass
 #ctrl + c
 import datetime
 import os
-from reportlab.pdfgen import canvas
-from reportlab.pdfbase.ttfonts import TTFont
-from reportlab.pdfbase.pdfmetrics import registerFont
 time = str(datetime.datetime.now())
 page = sl.sidebar.radio('问卷星_我的网络根据地',["问卷设计(试运行)","问卷数据下载(试运行)","问卷数据API接口使用说明","兴趣推荐","图片处理工具","智慧词典",'留言板',"退出网页"])
 text = """
@@ -20,9 +17,6 @@ text = """
 code = """
     print("Hello World!")
 """
-username = getpass.getuser()
-
-registerFont(TTFont("simhei","simhei.ttf"))
 
 Temp = ["","",[]]
 with open("information.json",'w') as f:
@@ -135,9 +129,9 @@ def home_liuyan():
     for i in mes_list:
         mes_str += i[0] + "：" + i[1] + "[" +i[2] + "]\n\n"
     sl.code(mes_str,language="python")
-    sl.info(f"用户名：{username}")
     inm = sl.text_input("I'm")
-    nm = sl.selectbox("I'm：",[username,inm,"Keeper Chen","匿名用户"])
+    nm = sl.selectbox("I'm：",[inm,"Keeper Chen","匿名用户"])
+    sl.info(f"用户名：{nm}")
     new_mes = sl.text_input("想要说的话……")
     but = sl.button("发送✈️")
     sl.link_button("跳转编程猫社区","https://shequ.codemao.cn/")
@@ -148,28 +142,6 @@ def home_liuyan():
             json.dump(mes_list,f)
         sl.success("发送成功！刷新网页以查看最新留言板")
     sl.image("振兴中华.jpg")
-
-def wenjuan_new(cnt):
-    choose = ['A','B','C','D']
-    returns = []
-    returns.append("")
-    returns.append({})
-    title = sl.text_input(f"{cnt}.题目标题")
-    while(1):
-        returns[0] = title
-        new = sl.button("新增选项")
-        if new:
-            text = sl.text_input("选项内容")
-            while(1):
-                enter = sl.button("确认")
-                if text and enter:
-                    chooses = choose[0]
-                    choose.pop(0)
-                    returns[1][chooses] = text
-                    break
-        finish = sl.button("确认题目")
-        if finish:
-            return returns
 
 def home_wenjuan():
     sl.title("问卷设计(试运行)")
@@ -182,14 +154,14 @@ def home_wenjuan():
     if cin1 and cin2:
         sl.title(cin1)
         sl.success(cin2)
-        with open("问卷星_我的网络根据地1\information.json","r") as f:
+        with open("information.json","r") as f:
             temp4 = json.load(f)
         temp4[0] = cin1
         temp4[1] = cin2
-        with open("问卷星_我的网络根据地1\information.json",'w') as f:
+        with open("information.json",'w') as f:
             json.dump(temp4,f)
         new = sl.button("新增选择题")
-        with open("问卷星_我的网络根据地1\cnt_timu.json",'r') as f:
+        with open("cnt_timu.json",'r') as f:
             cnt = json.load(f)
         sl.info("输入格式：题目标题/选项1#内容,选项2#内容···")
         text = sl.text_input("请输入")
@@ -207,28 +179,31 @@ def home_wenjuan():
                 a = i.split("#")[0]
                 b = i.split("#")[1]
                 temp3[a] = b
-            with open("问卷星_我的网络根据地1\information.json","r") as f:
+            with open("information.json","r") as f:
                 temp4 = json.load(f)
             temp2_2.append(cnt)
             temp2_2.append(temp3)
             lists.append(temp2_2)
             temp4[2].append(lists)
-            with open("问卷星_我的网络根据地1\information.json",'w') as f:
+            with open("information.json",'w') as f:
                 json.dump(temp4,f)
-            with open("问卷星_我的网络根据地1\cnt_timu.json",'w') as f:
+            with open("cnt_timu.json",'w') as f:
                 json.dump(cnt+1,f)
     finish = sl.button("完成设计")
     if finish:
         with open("cnt_timu.json",'w') as f:
             json.dump(1,f)
-        os.system("问卷设计.py")
+
+def home_making():
+    sl.info("敬情期待……")
+    sl.image("振兴中华.jpg")
     
 if(page=="问卷设计(试运行)"):
     home_wenjuan()
 elif(page=="问卷数据下载(试运行)"):
-    pass
+    home_making()
 elif(page=="问卷数据API接口使用说明"):
-    pass
+    home_making()
 elif(page=="兴趣推荐"):
     home_hobby()
 elif(page=="图片处理工具"):
@@ -238,4 +213,4 @@ elif(page=="智慧词典"):
 elif(page=="留言板"):
     home_liuyan()
 elif(page=="退出网页"):
-    exit()
+    pass()
