@@ -151,11 +151,16 @@ def home_wenjuan():
         cin1 = sl.text_input("标题")
     with cs2:
         cin2 = sl.text_input("副标题")
-    if cin1 and cin2:
+    na,em = sl.cplumns([2,5])
+    with na:
+        name = sl.text_input("I'm")
+    with em:
+        mail_tel = sl.text_input("联系方式(邮箱/电话)")
+    OK = sl.button("确认标题和信息")
+    if cin1 and cin2 and name and mail_tel and OK:
         sl.title(cin1)
         sl.success(cin2)
-        with open("information.json","r") as f:
-            temp4 = json.load(f)
+        temp4 = [,,]
         temp4[0] = cin1
         temp4[1] = cin2
         with open("information.json",'w') as f:
@@ -185,6 +190,8 @@ def home_wenjuan():
             temp2_2.append(temp3)
             lists.append(temp2_2)
             temp4[2].append(lists)
+            temp4.append(name)
+            temp4.append(mail_tel)
             with open("information.json",'w') as f:
                 json.dump(temp4,f)
             with open("cnt_timu.json",'w') as f:
