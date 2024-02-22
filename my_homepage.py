@@ -7,7 +7,7 @@ import getpass
 import datetime
 import os
 time = str(datetime.datetime.now())
-page = sl.sidebar.radio('问卷星_我的网络根据地',["问卷设计(试运行)","问卷数据下载(试运行)","问卷数据API接口使用说明","兴趣推荐","图片处理工具","智慧词典",'留言板',"退出网页"])
+page = sl.sidebar.radio('我的网络根据地',["问卷设计(试运行)","问卷数据下载(试运行)","问卷数据API接口使用说明","兴趣推荐","图片处理工具","智慧词典",'留言板',"退出网页"])
 text = """
     平台名称：问卷星_我的网络根据地\n
     用户：everyone\n
@@ -36,6 +36,7 @@ def home_hobby():
     sl.write(text)
     sl.title(':blue[页面当前代码]')
     sl.code(code,language="python")
+    sl.write("作者：豆豆")
     sl.image('振兴中华.jpg')
 
 def img_change(img,rc=0,gc=1,bc=2):
